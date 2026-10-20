@@ -82,10 +82,18 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange((event, session) => {
       if (!active) return;
 
       const currentUser = session?.user ?? null;
+
+      if (event === 'PASSWORD_RECOVERY') {
+        setUser(currentUser);
+        setProfile(null);
+        setLoading(false);
+        return;
+      }
+
       setUser(currentUser);
 
       if (!currentUser) {
