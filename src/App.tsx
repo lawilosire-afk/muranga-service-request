@@ -184,7 +184,6 @@ export default function App() {
   const resolvedCount = requests.filter(
     (request) => request.status === 'Resolved',
   ).length;
-
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -196,6 +195,13 @@ export default function App() {
         </div>
       </div>
     );
+  }
+
+  const isPasswordRecovery =
+    window.location.hash.includes('type=recovery');
+
+  if (isPasswordRecovery) {
+    return <AuthPage />;
   }
 
   if (!user) {
