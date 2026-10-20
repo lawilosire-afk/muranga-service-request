@@ -17,6 +17,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  const [passwordRecovery, setPasswordRecovery] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -90,6 +91,15 @@ export function AuthProvider({ children }: AuthProviderProps) {
       if (event === 'PASSWORD_RECOVERY') {
         setUser(currentUser);
         setProfile(null);
+        setPasswordRecovery(true);
+        setLoading(false);
+        return;
+      }
+
+      if (event === 'SIGNED_OUT') {
+        setUser(null);
+        setProfile(null);
+        setPasswordRecovery(false);
         setLoading(false);
         return;
       }
@@ -98,6 +108,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
       if (!currentUser) {
         setProfile(null);
+        setPasswordRecovery(false);
         setLoading(false);
         return;
       }
@@ -121,11 +132,14 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     setUser(null);
     setProfile(null);
+    setPasswordRecovery(false);
     setLoading(false);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, profile, loading, signOut }}>
+    <AuthContext.Provider
+      value={{ user, profile, loading, passwordRecovery, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -6,6 +6,7 @@ export interface AuthContextType {
   user: User | null;
   profile: Profile | null;
   loading: boolean;
+  passwordRecovery: boolean;
   signOut: () => Promise<void>;
 }
 

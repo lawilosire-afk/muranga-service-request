@@ -39,7 +39,7 @@ const STATUSES: (RequestStatus | 'All')[] = [
 ];
 
 export default function App() {
-  const { user, profile, loading, signOut } = useAuth();
+ const { user, profile, loading, passwordRecovery, signOut } = useAuth();
 
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -203,10 +203,13 @@ export default function App() {
   if (isPasswordRecovery) {
     return <AuthPage />;
   }
+if (passwordRecovery) {
+  return <AuthPage />;
+}
 
-  if (!user) {
-    return <AuthPage />;
-  }
+if (!user) {
+  return <AuthPage />;
+}
 
   const isNewUser =
     profile?.created_at != null &&
