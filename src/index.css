@@ -1,0 +1,7 @@
+@import "tailwindcss";
+
+@theme {
+  --color-county-green: #15803d;
+  --color-county-dark: #14532d;
+  --color-county-accent: #eab308;
+}
